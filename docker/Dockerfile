@@ -10,6 +10,10 @@ ENV TARGET_RUST_ARCH="x86_64-unknown-linux-musl"
 
 FROM base as builder-arm64
 ENV TARGET_RUST_ARCH="aarch64-unknown-linux-musl"
+RUN apt-get update && apt-get install clang llvm -y --no-install-recommends
+ENV CC_aarch64_unknown_linux_musl=clang
+ENV AR_aarch64_unknown_linux_musl=llvm-ar
+ENV CARGO_TARGET_AARCH64_UNKNOWN_LINUX_MUSL_RUSTFLAGS="-Clink-self-contained=yes -Clinker=rust-lld"
 
 FROM builder-${TARGETARCH} as builder
 RUN echo "Building for architecture:  $TARGET_RUST_ARCH"
