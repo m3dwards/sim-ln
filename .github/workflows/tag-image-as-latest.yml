@@ -30,6 +30,5 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Docker tag and push latest
         run: |
-          docker pull ${{ env.DOCKER_IMAGE }}:${{ steps.regex-match.outputs.group1 }}
-          docker tag ${{ env.DOCKER_IMAGE }}:${{ steps.regex-match.outputs.group1 }} ${{ env.DOCKER_IMAGE }}:latest
+          docker buildx imagetools create -t ${{ env.DOCKER_IMAGE }}:latest ${{ env.DOCKER_IMAGE }}:${{ steps.regex-match.outputs.group1 }}
           docker push ${{ env.DOCKER_IMAGE }}:latest
