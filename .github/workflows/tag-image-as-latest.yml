@@ -31,4 +31,3 @@ jobs:
       - name: Docker tag and push latest
         run: |
           docker buildx imagetools create -t ${{ env.DOCKER_IMAGE }}:latest ${{ env.DOCKER_IMAGE }}:${{ steps.regex-match.outputs.group1 }}
-          docker push ${{ env.DOCKER_IMAGE }}:latest
